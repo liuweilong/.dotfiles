@@ -1,0 +1,11 @@
+snippet '(\(|\[|\{)' "Complete parenthesis" r
+`!p
+def completeP(t):
+	if t == '(':
+		return ')'
+	elif t == '[':
+		return ']'
+	else:
+		return '}'
+snip.rv = match.group(1)`$1`!p snip.rv = completeP(match.group(1)) `
+endsnippet

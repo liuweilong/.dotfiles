@@ -1,0 +1,21 @@
+global !p
+def complete(t, opts):
+	if t:
+		opts = [m[len(t):] for m in opts if m.startswith(t)]
+	if len(opts) == 1:
+		return opts[0]
+	elif len(opts) != 0:
+		return '(' + '|'.join(opts) + ')'
+	else:
+		return ''
+endglobal
+
+snippet st "Status" b
+status $1$1`!p 
+snip.rv=complete(t[1], ['this', 'ayo', 'that'])
+`
+endsnippet
+
+snippet hw "Hello World" !b
+Hello $1 wo $2rld
+endsnippet
