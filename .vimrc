@@ -25,6 +25,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'ervandew/eclim'
 " Exchange two different words, cx for selection, cxx for line
 Plugin 'tommcdo/vim-exchange'
+Plugin 'benmills/vimux'
 " ---------- abandoned----------  
 "Plugin 'https://github.com/neilagabriel/vim-geknote'
 "Plugin 'Yggdroot/indentLine'
