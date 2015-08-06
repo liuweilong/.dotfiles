@@ -1,40 +1,30 @@
-let base16colorspace=256
-set t_Co=256
-set background=dark
-colorscheme base16-railscasts
-
-" Change cursor shape between insert and normal mode in iTerm2.app
-if $TERM_PROGRAM =~ "iTerm"
-	let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-	let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-endif
-
 " Vundle start
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle
-" required! 
-Plugin 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
 " The bundles you install will be listed here
-Plugin 'https://github.com/scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
-Plugin 'https://github.com/aperezdc/vim-template'
-" Pick the engine.
+Plugin 'aperezdc/vim-template'
 Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
-Plugin 'https://github.com/davidhalter/jedi-vim'
-Plugin 'https://github.com/Rip-Rip/clang_complete'
-Plugin 'https://github.com/wikitopian/hardmode'
-Plugin 'https://github.com/tpope/vim-surround'
-Plugin 'https://github.com/ervandew/eclim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'Rip-Rip/clang_complete'
+Plugin 'wikitopian/hardmode'
+Plugin 'tpope/vim-surround'
+Plugin 'ervandew/eclim'
+" Exchange two different words, cx for selection, cxx for line
+Plugin 'tommcdo/vim-exchange'
 " ---------- abandoned----------  
 "Plugin 'https://github.com/neilagabriel/vim-geknote'
 "Plugin 'Yggdroot/indentLine'
@@ -43,15 +33,36 @@ Plugin 'https://github.com/ervandew/eclim'
 call vundle#end()
 filetype plugin indent on
 " Vundle end
+
+let base16colorspace=256
+set t_Co=256
+set background=dark
+colorscheme base16-railscasts
+
+" Change cursor shape between insert and normal mode in iTerm2.app
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+elseif exists('$TMUX')
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+else
+    let &t_SI = "\e[5 q"
+    let &t_EI = "\e[2 q"
+endif
+
 " Syntax
 syntax on
 
+" jedi-vim
+let g:jedi#auto_initialization = 0
+
 " Enable hardmode
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+"autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
@@ -72,7 +83,7 @@ set list lcs=tab:\|\
 " Nerdtree
 let NERDTreeIgnore = ['\.pyc$']
 
-" Search set
+" Search set, highlight searched word
 set incsearch
 set smartcase
 
@@ -94,14 +105,23 @@ set relativenumber
 
 " Set tabsize
 " size of a hard tabstop
-set tabstop=4
+"set tabstop=4
 
 " size of an "indent"
 set shiftwidth=4
 
 " a combination of spaces and tabs are used to simulate tab stops at a width
 " other than the (hard)tabstop
-"set softtabstop=4
+set softtabstop=4
+
+" (Hopefully) removes the delay when hitting esc in insert mode
+" Works like magic, solved the esc delay problem when use FuzzyFinder 
+set noesckeys
+set ttimeout
+set ttimeoutlen=1
+
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set autoindent " always set autoindenting on
 
 " Set Key Mapping
 map <F2> :NERDTreeToggle<CR>
@@ -121,6 +141,14 @@ nnoremap <C-y> 3<C-y>
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 " Fuzzy Finder
-nmap ,f :FufFileWithCurrentBufferDir<CR>
-nmap ,b :FufBuffer<CR>
-nmap ,t :FufTaggedFile<CR>
+nmap <leader>f :FufFileWithCurrentBufferDir<CR>
+nmap <leader>b :FufBuffer<CR>
+nmap <leader>t :FufTaggedFile<CR>
+
+" Map Ctrl-s to save
+map <leader>s <esc>:w<CR>
+imap <leader>s <esc>:w<CR>a
+
+" Leaders
+map <leader>vr :BundleInstall<CR>
+map <leader>r :source ~/.vimrc<CR>
