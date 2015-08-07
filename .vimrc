@@ -26,6 +26,9 @@ Plugin 'ervandew/eclim'
 " Exchange two different words, cx for selection, cxx for line
 Plugin 'tommcdo/vim-exchange'
 Plugin 'benmills/vimux'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+
 " ---------- abandoned----------  
 "Plugin 'https://github.com/neilagabriel/vim-geknote'
 "Plugin 'Yggdroot/indentLine'
@@ -142,9 +145,9 @@ nnoremap <C-y> 3<C-y>
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 " Fuzzy Finder
-nmap <leader>f :FufFileWithCurrentBufferDir<CR>
-nmap <leader>b :FufBuffer<CR>
-nmap <leader>t :FufTaggedFile<CR>
+"nmap <leader>f :FufFileWithCurrentBufferDir<CR>
+"nmap <leader>b :FufBuffer<CR>
+"nmap <leader>t :FufTaggedFile<CR>
 
 " Map Ctrl-s to save
 map <leader>s <esc>:w<CR>
